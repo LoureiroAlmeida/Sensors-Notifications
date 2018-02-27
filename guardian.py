@@ -1,6 +1,8 @@
 import time
-
+import notifications
 import sensors
+import random
+import pprint as pp
 
 
 class Guardian(object):
@@ -19,14 +21,17 @@ class Guardian(object):
         self.sensors["binary"] = {}
         self.sensors["numeric"] = {}
 
+        self.notify=notifications.MockNotification()
+        self.already_n=[]
+
     def create_sensors(self):
         for name in self.numeric_sensors_names:
             self.numeric_sensors.append(
-                self.sensors.mocksensors.MockNumericSensor(name)
+                sensors.mocksensors.MockNumericSensor(name)
             )
         for name in self.binay_sensors_names:
             self.binay_sensors.append(
-                self.sensors.mocksensors.MockBinarySensor(name)
+                sensors.mocksensors.MockBinarySensor(name)
             )
         pass
 
@@ -46,14 +51,18 @@ class Guardian(object):
         # crearsensores
         self.create_sensors()
         while True:
-            state = self.get_state()
-        #        if condiciones:
-        #           notificar()
-        #        sleep(1)
-            print(state)
-            time.sleep(1)
+            self.get_state()
+
+            for ns in self.sensors["numeric"]:
+                if self.sensors["numeric"][ns] > 15.0 and ns not in self.already_n:
+                    self.notify.notify(ns)
+                    self.already_n.append(ns)
+
+            pprint(self.sensors)
+            time.sleep(0.2)
         pass
 
 if __name__=='__main__':
+    random.seed(1)
     guardian = Guardian()
     guardian.main

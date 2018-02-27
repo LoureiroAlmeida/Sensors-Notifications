@@ -1,18 +1,24 @@
 from .binary import BinarySensor
 from .numeric import NumericSensor
 
+import random
+
 class MockBinarySensor(BinarySensor):
     """MockBinarySensor"""
-    def __init__(self):
-        super(MockBinarySensor,BinarySensor.__init__(name)
+    def __init__(self,name):
+        super(MockBinarySensor,self).__init__(name)
 
     def update_state(self):
-        self.state = not self.state
+        if random.randint(1,100) == 98:
+            self.state = not self.state
 
-class MockNumericSensor(BinarySensor):
+class MockNumericSensor(NumericSensor):
     """MockNumericSensor"""
-    def __init__(self):
-        super(MockBinarySensor,BinarySensor.__init__(name)
+    def __init__(self,name):
+        super(MockBinarySensor,self).__init__(name)
+
 
     def update_state(self):
-        self.value = 23.5
+        self.value += random.uniform(-0.1,0.1)
+        if random.randint(1,100) == 98:
+            self.value += 10.0
