@@ -2,6 +2,7 @@ import time
 
 import sensors
 
+
 class Guardian(object):
     """HomeGuardian is a security system for python"""
     def __init__(self):
@@ -21,11 +22,11 @@ class Guardian(object):
     def create_sensors(self):
         for name in self.numeric_sensors_names:
             self.numeric_sensors.append(
-                sensors.mocksensors.MockNumericSensor(name)
+                self.sensors.mocksensors.MockNumericSensor(name)
             )
         for name in self.binay_sensors_names:
             self.binay_sensors.append(
-                sensors.mocksensors.MockBinarySensor(name)
+                self.sensors.mocksensors.MockBinarySensor(name)
             )
         pass
 
@@ -33,13 +34,13 @@ class Guardian(object):
         #update
         for sensor in self.binay_sensors:
             sensor.update_state()
-            sensors["binary"][sensor.name] = sensor.get_state()
+            self.sensors["binary"][sensor.name] = sensor.get_state()
 
         for sensor in self.numeric_sensors:
             sensor.update_value()
-            sensors["numeric"][sensor.name] = sensor.get_value()
+            self.sensors["numeric"][sensor.name] = sensor.get_value()
 
-        return sensors
+        return self.sensors
 
     def main(self):
         # crearsensores
