@@ -20,8 +20,8 @@ class Guardian(object):
         self.sensors = {}
         self.sensors["binary"] = {}
         self.sensors["numeric"] = {}
-
-        self.notify=notifications.MockNotification()
+     #  self.notify = notifications.MockNotification()
+        self.notify = notifications.TelegramNotification()
         self.already_n=[]
 
     def create_sensors(self):
@@ -58,7 +58,7 @@ class Guardian(object):
                     self.notify.notify(ns)
                     self.already_n.append(ns)
 
-            pprint(self.sensors)
+    #        pprint(self.sensors)
             time.sleep(0.2)
         pass
 
