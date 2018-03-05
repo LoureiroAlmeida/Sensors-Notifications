@@ -1,8 +1,8 @@
 from .main import Sensor
 
 class BinarySensor(Sensor):
-    """docstring for """
-    def __init__(self,name):
+    """BinarySensor"""
+    def __init__(self, name):
         super(BinarySensor, self).__init__(name)
         self.state = False
 
