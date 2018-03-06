@@ -22,3 +22,11 @@ class MockNumericSensor(NumericSensor):
         self.value += random.uniform(-0.1,0.1)
         if random.randint(1,100) == 98:
             self.value += 10.0
+
+class DHT(NumericSensor):
+    """DHT."""
+    def __init__(self, name):
+        super(DHT, self).__init__(name)
+
+    def update_value(self):
+        self.value = 12.0

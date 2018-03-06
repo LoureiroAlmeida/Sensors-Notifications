@@ -15,6 +15,7 @@ class Guardian(object):
         self.numeric_sensors_names = [
             "nsensor1", "nsensor2", "nsensor3"
         ]
+        #self.Temperature_sensor = "DHT"
         self.numeric_sensors = []
         self.binary_sensors = []
         self.sensors = {}
@@ -33,6 +34,7 @@ class Guardian(object):
             self.binary_sensors.append(
                 sensors.mocksensor.MockBinarySensor(name)
             )
+        self.numeric_sensors.append(sensors.mocksensor.DHT("DHT"))
         pass
 
     def get_state(self):
@@ -53,12 +55,12 @@ class Guardian(object):
             self.get_state()
 
             for ns in self.sensors["numeric"]:
-                if self.sensors["numeric"][ns] > 15.0 \
+                if self.sensors["numeric"][ns] > 25.0 \
                     and ns not in self.already_n:
                     self.notify.notify(ns)
                     self.already_n.append(ns)
     #        pprint(self.sensors)
-            time.sleep(0.2)
+            time.sleep(1)
         pass
 
 if __name__=='__main__':
