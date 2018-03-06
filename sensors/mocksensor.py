@@ -2,6 +2,9 @@ from .binary import BinarySensor
 from .numeric import NumericSensor
 
 import random
+import Adafruit_DHT
+import RPi.GPIO as GPIO
+
 
 class MockBinarySensor(BinarySensor):
     """MockBinarySensor"""
@@ -28,5 +31,7 @@ class DHT(NumericSensor):
     def __init__(self, name):
         super(DHT, self).__init__(name)
 
+
     def update_value(self):
-        self.value = 12.0
+        humidity, temperature = Adafruit_DHT.read_retry(Adafruit_DHT.DHT11, pin=16, retries=6, delay_seconds=2)
+        self.value = temperature

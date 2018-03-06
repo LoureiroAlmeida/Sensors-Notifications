@@ -4,6 +4,11 @@ import notifications
 import sensors
 import random
 import pprint as pp
+import Adafruit_DHT
+import RPi.GPIO as GPIO
+
+
+
 
 class Guardian(object):
     """HomeGuardian is a security system for python"""
@@ -24,6 +29,7 @@ class Guardian(object):
      #  self.notify = notifications.MockNotification()
         self.notify = notifications.TelegramNotification()
         self.already_n=[]
+        #self.DHTpin = 16
 
     def create_sensors(self):
         for name in self.numeric_sensors_names:
@@ -53,13 +59,13 @@ class Guardian(object):
         self.create_sensors()
         while True:
             self.get_state()
-
+            print self.sensors["numeric"]["DHT"]
             for ns in self.sensors["numeric"]:
                 if self.sensors["numeric"][ns] > 25.0 \
                     and ns not in self.already_n:
                     self.notify.notify(ns)
                     self.already_n.append(ns)
-    #        pprint(self.sensors)
+
             time.sleep(1)
         pass
 
