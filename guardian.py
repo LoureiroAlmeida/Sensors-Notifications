@@ -28,8 +28,8 @@ class Guardian(object):
         self.sensors["numeric"] = {}
      #  self.notify = notifications.MockNotification()
         self.notify = notifications.TelegramNotification()
-        self.already_n=[]
-        #self.DHTpin = 16
+        #self.already_n=[]
+        #self.DHTpin = 23
 
     def create_sensors(self):
         for name in self.numeric_sensors_names:
@@ -40,7 +40,8 @@ class Guardian(object):
             self.binary_sensors.append(
                 sensors.mocksensor.MockBinarySensor(name)
             )
-        self.numeric_sensors.append(sensors.mocksensor.DHT("DHT"))
+        self.numeric_sensors.append(sensors.sensor1.DHT("DHT"))
+        self.binary_sensors.append(sensors.sensor1.PIR("PIR"))
         pass
 
     def get_state(self):
@@ -59,12 +60,11 @@ class Guardian(object):
         self.create_sensors()
         while True:
             self.get_state()
-            print self.sensors["numeric"]["DHT"]
+            print self.sensors["binary"]["PIR"]
             for ns in self.sensors["numeric"]:
-                if self.sensors["numeric"][ns] > 25.0 \
-                    and ns not in self.already_n:
+                if self.sensors["numeric"][ns] > 25.0:
                     self.notify.notify(ns)
-                    self.already_n.append(ns)
+
 
             time.sleep(1)
         pass

@@ -25,13 +25,3 @@ class MockNumericSensor(NumericSensor):
         self.value += random.uniform(-0.1,0.1)
         if random.randint(1,100) == 98:
             self.value += 10.0
-
-class DHT(NumericSensor):
-    """DHT."""
-    def __init__(self, name):
-        super(DHT, self).__init__(name)
-
-
-    def update_value(self):
-        humidity, temperature = Adafruit_DHT.read_retry(Adafruit_DHT.DHT11, pin=16, retries=6, delay_seconds=2)
-        self.value = temperature
